@@ -104,6 +104,23 @@ def analyze_news(page: str = None):
                 except:
                     stock_info = None
 
+                        # Calculate hype score
+            if sentiment == "Positive":
+                base = 65
+            elif sentiment == "Negative":
+                base = 20
+            else:
+                base = 45
+
+            # Boost score based on stock movement
+            if stock_info:
+                change = abs(stock_info["change_percent"])
+                boost = min(int(change * 2), 30)
+            else:
+                boost = 0
+
+            hype_score = min(base + boost, 99)
+
             analyzed.append({
                 "title": title,
                 "company": company,
@@ -111,6 +128,7 @@ def analyze_news(page: str = None):
                 "ticker": ticker,
                 "exchange": exchange,
                 "stock": stock_info,
+                "hype_score": hype_score,
                 "link": item.get("link")
             })
 
