@@ -116,4 +116,4 @@ def analyze_news(page: str = None):
             analyzed.append({"error": str(e)})
             continue
 
-    return {"results": analyzed}
+    return {"results": analyzed, "nextPage": next_page}
