@@ -22,12 +22,15 @@ def home():
     return {"message": "Stock News AI is running"}
 
 @app.get("/analyze")
-def analyze_news():
-    # Step 1: Fetch viral/trending news
+def analyze_news(page: str = None):
+    # Step 1: Fetch news with optional pagination
     url = f"https://newsdata.io/api/1/news?apikey={NEWSDATA_KEY}&q=company+stock+market+shares+business&language=en&category=business,technology"
+    if page:
+        url += f"&page={page}"
     response = requests.get(url)
     data = response.json()
     results = data.get("results") or []
+    next_page = data.get("nextPage")
     seen_titles = set()
     unique_results = []
     for r in results:
