@@ -92,12 +92,14 @@ def analyze_news(page: str = None):
 
                     hist = stock.history(period="7d")
                     if not hist.empty:
+                        closes = [round(float(p), 2) for p in hist["Close"].tolist()]
                         stock_info = {
                             "current_price": round(hist["Close"].iloc[-1], 2),
                             "week_ago_price": round(hist["Close"].iloc[0], 2),
                             "change_percent": round(
                                 ((hist["Close"].iloc[-1] - hist["Close"].iloc[0]) / hist["Close"].iloc[0]) * 100, 2
-                            )
+                            ),
+                            "price_history": closes
                         }
                 except:
                     stock_info = None
