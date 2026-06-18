@@ -14,7 +14,7 @@ app.add_middleware(
 )
 
 NEWSDATA_KEY = "pub_bde7ff30170b4e87a0d8ed895363ca58"
-GROQ_KEY = "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"
+GROQ_KEY = "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"
 client = Groq(api_key=GROQ_KEY)
 
 @app.get("/")
